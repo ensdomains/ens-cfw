@@ -1,5 +1,4 @@
-import { utils } from "ethers";
-import { namehash } from "ethers/lib/utils";
+import { defaultAbiCoder, namehash } from "ethers/lib/utils";
 import type { Request as IttyRequest } from "itty-router";
 import { Router } from "itty-router";
 
@@ -31,15 +30,12 @@ const handleFetch = async (address: string, data: string) => {
 const getAddressFromName = async (name: string) => {
   const hash = namehash(name).substring(2);
   const resolver: any = await handleFetch(ensAddress, "0x0178b8bf" + hash);
-  const resolverAddress = utils.defaultAbiCoder.decode(
+  const resolverAddress = defaultAbiCoder.decode(
     ["address"],
     resolver.result
   )[0];
   const addr: any = await handleFetch(resolverAddress, "0x3b3b57de" + hash);
-  const formattedAddr = utils.defaultAbiCoder.decode(
-    ["address"],
-    addr.result
-  )[0];
+  const formattedAddr = defaultAbiCoder.decode(["address"], addr.result)[0];
   return formattedAddr;
 };
 
@@ -47,15 +43,12 @@ const getNameFromAddress = async (address: string) => {
   const reverseNode = address.substring(2) + ".addr.reverse";
   const hash = namehash(reverseNode).substring(2);
   const resolver: any = await handleFetch(ensAddress, "0x0178b8bf" + hash);
-  const resolverAddress = utils.defaultAbiCoder.decode(
+  const resolverAddress = defaultAbiCoder.decode(
     ["address"],
     resolver.result
   )[0];
   const name: any = await handleFetch(resolverAddress, "0x691f3431" + hash);
-  const formattedName = utils.defaultAbiCoder.decode(
-    ["string"],
-    name.result
-  )[0];
+  const formattedName = defaultAbiCoder.decode(["string"], name.result)[0];
   return formattedName;
 };
 
