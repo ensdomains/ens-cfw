@@ -58,10 +58,10 @@ router.get(
     const input = decodeURIComponent(params.name);
     const time = Date.now();
     const address = await getAddressFromName(input);
-    console.log(Date.now() - time);
     return new Response(
       JSON.stringify({
         address,
+        ms: Date.now() - time,
       })
     );
   }
@@ -74,13 +74,13 @@ router.get(
     const time = Date.now();
     const name = await getNameFromAddress(input);
     const forwardAddress = await getAddressFromName(name);
-    console.log(Date.now() - time);
     return new Response(
       JSON.stringify({
         name,
         match:
           forwardAddress &&
           forwardAddress.toLowerCase() === input.toLowerCase(),
+        ms: Date.now() - time,
       })
     );
   }
