@@ -1,4 +1,9 @@
-name = "eth-cfw"
-main = 'src/index.ts'
-compatibility_date = "2022-06-06"
-node_compat = true
+name = "ens-endpoint-test"
+main = './dist/index.js'
+compatibility_date = "2023-10-23"
+no_bundle = true
+
+[build]
+command = "bun run build"
+cwd = "./"
+watch_dir = "./src"
